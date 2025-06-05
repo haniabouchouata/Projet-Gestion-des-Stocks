@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Ajout d’un transfert</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f6f8;
+      color: #333;
+      text-align: center;
+    }
+
+    h2 {
+      margin-top: 40px;
+      color: #2c3e50;
+      font-size: 1.8em;
+    }
+
+    form {
+      background-color: #fff;
+      padding: 30px 40px;
+      margin: 15px auto;
+      width: 400px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      text-align: left;
+    }
+
+    form label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    form input {
+      width: 100%;
+      padding: 8px 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    form button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 15px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    form button:hover {
+      background-color: #0056b3;
+    }
+
+    a.back-link {
+      display: inline-block;
+      margin-bottom: 40px;
+      font-size: 14px;
+      color: #007BFF;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    a.back-link:hover {
+      text-decoration: underline;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: flex-end;
+      margin-right: 5%;
+      margin-top: 30px;
+      gap: 20px;
+    }
+
+    .footer-links a {
+      color: #007BFF;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+<h2><a th:href="@{/transfert}"> &gt;>Liste des Transferts</a> <a th:href="@{/transferts/new}">&gt; >Nouveau transfert</a></h2>
+
+<form method="post" th:action="@{/transfert/save}" th:object="${transfert}">
+  <input type="hidden" th:field="*{id}"/>
+
+  <label for="dateTransfert">Date de transfert :</label>
+  <input type="date" id="dateTransfert" th:field="*{dateTransfert}" required />
+
+  <label for="produit">Produit :</label>
+  <input type="text" id="produit" th:field="*{produit}" required />
+
+  <label for="unite">Unité :</label>
+  <input type="text" id="unite" th:field="*{unite}" required />
+
+  <label for="quantite">Quantité :</label>
+  <input type="number" id="quantite" th:field="*{quantite}" required />
+
+  <label for="entrepotSource">Entrepôt source :</label>
+  <input type="text" id="entrepotSource" th:field="*{entrepotSource}" required />
+
+  <label for="entrepotDestination">Entrepôt cible :</label>
+  <input type="text" id="entrepotDestination" th:field="*{entrepotDestination}" required />
+
+  <button type="submit">Enregistrer</button>
+</form>
+
+<a th:href="@{/transfert}" class="back-link">&lt; Retour à la liste des transferts</a>
+
+</body>
+</html>

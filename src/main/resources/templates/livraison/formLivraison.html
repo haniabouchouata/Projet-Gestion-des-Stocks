@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${livraison.id == null} ? 'Nouvelle livraison' : 'Modifier la livraison'">Formulaire Livraison</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f6f8;
+      color: #333;
+      text-align: center;
+    }
+
+    h2 {
+      margin-top: 40px;
+      color: #2c3e50;
+      font-size: 1.8em;
+    }
+
+    form {
+      background-color: #fff;
+      padding: 30px 40px;
+      margin: 15px auto;
+      width: 400px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      text-align: left;
+    }
+
+    form label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    form input {
+      width: 100%;
+      padding: 8px 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    form button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 15px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    form button:hover {
+      background-color: #0056b3;
+    }
+
+    a.back-link {
+      display: inline-block;
+      margin-bottom: 40px;
+      font-size: 14px;
+      color: #007BFF;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    a.back-link:hover {
+      text-decoration: underline;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: flex-end;
+      margin-right: 5%;
+      margin-top: 30px;
+      gap: 20px;
+    }
+
+    .footer-links a {
+      color: #007BFF;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+<h2 th:text="${livraison.id == null} ? 'Nouvelle livraison' : 'Modifier la livraison'"></h2>
+
+<form th:action="@{/livraison/save}" th:object="${livraison}" method="post">
+
+  <div>
+    <label>Date de livraison :</label>
+    <input type="date" name="dateLivraison" th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" required>
+  </div>
+
+  <div>
+    <label>Produit :</label>
+    <input type="text" name="produit" th:value="${livraison.produit}">
+  </div>
+
+  <div>
+    <label>Unité :</label>
+    <select name="unite" required>
+      <option th:selected="${livraison.unite == 'Kg'}" value="Kg">Kg</option>
+      <option th:selected="${livraison.unite == 'L'}" value="L">L</option>
+    </select>
+  </div>
+
+  <div>
+    <label>Quantité :</label>
+    <input type="number" name="quantite" th:value="${livraison.quantite}" min="1" required>
+  </div>
+
+  <div>
+    <label>Pour :</label>
+    <input type="text" name="client" th:value="${livraison.client}" required>
+  </div>
+
+  <div>
+    <label>Entrepôt :</label>
+    <select name="entrepot">
+      <option th:each="e : ${entrepots}"
+              th:value="${e.nom}"
+              th:text="${e.nom}"
+              th:selected="${livraison.entrepot != null and e.nom ==livraison.entrepot}">
+      </option>
+    </select>
+
+  </div>
+
+  <div>
+    <label>Remarque :</label>
+    <input type="text" name="remarque" th:value="${livraison.remarque}" required>
+  </div>
+
+  <button type="submit">Enregistrer</button>
+</form>
+
+<div class="back-link">
+  <a th:href="@{/livraison}">&larr; Retour à la liste</a>
+</div>
+
+</body>
+</html>

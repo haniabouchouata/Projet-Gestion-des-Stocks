@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Accueil - Gestion de Stock</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        h1 {
+            margin-top: 50px;
+            font-size: 2em;
+            color: #333;
+        }
+
+        table {
+            width: 40%;
+            margin: 30px auto;
+            background-color: #fff;
+            border-collapse: collapse;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            font-size: 16px;
+        }
+
+        th {
+            background-color: #e9ecef;
+            color: #333;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        a.button {
+            text-decoration: none;
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 6px;
+            transition: background-color 0.3s;
+        }
+
+        a.button:hover {
+            background-color: #0056b3;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: flex-end;
+            margin-right: 5%;
+            margin-top: 30px;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            color: #007BFF;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Gestion de Stock</h1>
+
+<table>
+    <tbody>
+    <tr>
+        <td>Entrepôts</td>
+        <td><a th:href="@{/entrepots/list}" class="button">Accéder</a></td>
+    </tr>
+    <tr>
+        <td>Réceptions</td>
+        <td><a th:href="@{/reception}" class="button">Accéder</a></td>
+    </tr>
+    <tr>
+        <td>Livraisons</td>
+        <td><a th:href="@{/livraison}" class="button">Accéder</a></td>
+    </tr>
+    <tr>
+        <td>Transferts</td>
+        <td><a th:href="@{/transfert}" class="button">Accéder</a></td>
+    </tr>
+    <tr>
+        <td>Inventaire</td>
+        <td><a th:href="@{/inventaire}" class="button">Accéder</a></td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="footer-links">
+    <a th:href="@{/logout}">Déconnexion</a>
+</div>
+
+</body>
+</html>

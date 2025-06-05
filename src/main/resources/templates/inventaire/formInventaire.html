@@ -1,0 +1,41 @@
+<form id="inventaireForm" method="post" enctype="multipart/form-data" style="max-width: 500px; margin: auto; background-color: #fff; padding: 30px 40px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+    <label style="display: block; margin-bottom: 8px; font-weight: 600;">Date inventaire :</label>
+    <input type="date" name="dateInventaire"
+           th:value="${inventaire.dateInventaire != null ? inventaire.dateInventaire : #dates.format(#dates.createNow(), 'yyyy-MM-dd')}"
+           required
+           style="width: 100%; padding: 10px; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px;">
+
+    <label style="display: block; margin-bottom: 8px; font-weight: 600;">Entrepôt :</label>
+    <select name="entrepot"
+            style="width: 100%; padding: 10px; margin-bottom: 30px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px;">
+        <option th:each="e : ${entrepots}"
+                th:value="${e.nom}"
+                th:text="${e.nom}"
+                th:selected="${inventaire.entrepot != null and e.nom == inventaire.entrepot}">
+        </option>
+    </select>
+
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+        <button type="button"
+                onclick="submitForm('/inventaire/ajouter')"
+                style="padding: 12px; background-color: #007BFF; color: white; border: none; border-radius: 6px; font-size: 15px; cursor: pointer;">
+            📥 Télécharger le fichier
+        </button>
+
+        <button type="button"
+                onclick="submitForm('/inventaire/ecarts')"
+                style="padding: 12px; background-color: #28a745; color: white; border: none; border-radius: 6px; font-size: 15px; cursor: pointer;">
+            ➡️ Suivant (afficher écarts)
+        </button>
+    </div>
+</form>
+
+<script>
+    function submitForm(actionUrl) {
+        const form = document.getElementById('inventaireForm');
+        form.action = actionUrl;
+        form.method = actionUrl.includes('pageecarttest') ? 'get' : 'post'; // Optionnel, à adapter selon le contrôleur
+        form.submit();
+    }
+</script>
+<a th:href="@{/}">&lt; Home</a>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Gestion des Entrepôts</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        a{
+            color: #4CAF50;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-color: #f9f9f9;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #007BFF;
+        }
+        h1 {
+            margin-bottom: 20px;
+            color: #007BFF;
+        }
+
+        .tabs {
+            margin-bottom: 20px;
+        }
+
+        .tabs a {
+            margin: 0 10px;
+            font-weight: bold;
+            color: #007BFF;
+            text-decoration: none;
+        }
+
+        .tabs a:hover {
+            text-decoration: underline;
+        }
+
+        form {
+            margin-bottom: 20px;
+            display: inline-block;
+            text-align: left;
+        }
+
+        form label {
+            display: inline-block;
+            width: 120px;
+        }
+
+        form input {
+            padding: 5px;
+            margin-bottom: 10px;
+            width: 200px;
+        }
+
+        form button {
+            margin-left: 130px;
+            padding: 6px 12px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background-color: #0056b3;
+        }
+
+        table {
+            margin: 0 auto 30px auto;
+            width: 90%;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+            border-collapse: collapse;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        td a {
+            color: #28a745;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        td a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+            margin-right: 5%;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            color: #007BFF;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+<body>
+
+<h1>Liste des Entrepôts</h1>
+
+<table>
+    <thead><!-- table head-->
+    <tr><!--titre des colonnes:table row-->
+        <th>ID</th><!-- titre de colonne ("table header").-->
+        <th>Code</th>
+        <th>Nom</th>
+        <th>Adresse</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody><!--afficher dynamiquement une liste d'entrepôts-->
+    <tr th:each="entrepot : ${entrepots}"> <!--Itérer sur une liste -->
+        <td th:text="${entrepot.id}">1</td>
+        <td th:text="${entrepot.code}">code</td>
+        <td th:text="${entrepot.nom}">Nom</td>
+        <td th:text="${entrepot.adresse}">Adresse</td>
+        <td>
+            <a th:href="@{/entrepots/edit/{id}(id=${entrepot.id})}">Modifier</a>
+            |
+            <a th:href="@{/entrepots/delete/{id}(id=${entrepot.id})}"
+               onclick="return confirm('Confirmer la suppression ?')">Supprimer</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<hr/>
+
+<h2 th:text="${entrepot.id != null} ? 'Modifier un Entrepôt' : 'Ajouter un nouvel Entrepôt'"></h2>
+
+<form th:action="${entrepot.id != null} ? @{/entrepots/update} : @{/entrepots/add}"
+      th:object="${entrepot}" method="post">
+
+    <!-- Champ caché pour l'ID lors de la modification -->
+    <input type="hidden" th:if="${entrepot.id != null}" th:field="*{id}" />
+
+    <label>Code :</label>
+    <input type="text" th:field="*{code}" placeholder="Code de l'entrepôt" required />
+    <br><br>
+
+    <label>Nom :</label>
+    <input type="text" th:field="*{nom}" placeholder="Nom de l'entrepôt" required />
+    <br><br>
+
+    <label>Adresse :</label>
+    <input type="text" th:field="*{adresse}" placeholder="Adresse" required />
+    <br><br>
+
+    <button type="submit" th:text="${entrepot.id != null} ? 'Modifier' : 'Ajouter'"></button>
+</form>
+
+</body>
+<a th:href="@{/}">&lt; Home</a>
+</html>

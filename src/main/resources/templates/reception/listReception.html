@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Liste des réceptions</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-color: #f4f6f9;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 50px;
+            color: #007BFF;
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        form {
+            margin-bottom: 30px;
+            display: inline-block;
+            text-align: left;
+            background-color: #fff;
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        form label {
+            display: inline-block;
+            width: 120px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        form input {
+            padding: 7px;
+            margin: 8px 0;
+            width: 200px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        form button {
+            margin-top: 10px;
+            margin-left: 125px;
+            padding: 8px 16px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        form button:hover {
+            background-color: #0056b3;
+        }
+
+        table {
+            width: 95%;
+            margin: 0 auto 30px auto;
+            background-color: white;
+            border-collapse: collapse;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+        }
+
+        th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+            color: #333;
+        }
+
+        td {
+            color: #555;
+        }
+
+        td a {
+            color: #28a745;
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        td a:hover {
+            text-decoration: underline;
+            color: #218838;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+            margin-right: 5%;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            color: #007BFF;
+            font-weight: bold;
+            text-decoration: none;
+            transition: text-decoration 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+
+    </style>
+</head>
+<body>
+
+<h2>Liste des réceptions</h2>
+
+<form method="get" th:action="@{/reception/recherche}">
+    <label>Date de réception:</label>
+    De: <input type="date" name="date1" th:value="${#dates.format(dateDebut, 'yyyy-MM-dd')}" />
+    A: <input type="date" name="date2" th:value="${#dates.format(dateFin, 'yyyy-MM-dd')}" />
+    <br>
+    <label>Produit:</label>
+    <input type="text" name="produit" />
+    <label>Entrepôt:</label>
+    <input type="text" name="entrepot" />
+    <button type="submit">Chercher</button>
+</form>
+
+<br>
+
+<table>
+    <thead>
+    <tr>
+        <th>Date réception</th>
+        <th>Produit</th>
+        <th>Unite</th>
+        <th>Quantite</th>
+        <th>Source</th>
+        <th>Entrepot</th>
+        <th>Remarque</th>
+        <th colspan="2">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="rec : ${receptions}">
+        <td th:text="${rec.dateReception}">15/02/2023</td>
+        <td th:text="${rec.produit}">Sucre</td>
+        <td th:text="${rec.unite}">Kg</td>
+        <td th:text="${rec.quantite}">100</td>
+        <td th:text="${rec.source}">Fournisseur</td>
+        <td th:text="${rec.entrepot}">MAG1</td>
+        <td th:text="${rec.remarque}">Néant</td>
+        <td><a th:href="@{'/receptions/edit/' + ${rec.id}}">Modifier</a></td>
+        <td><a th:href="@{'/receptions/delete/' + ${rec.id}}" onclick="return confirm('Confirmer la suppression ?')">Supprimer</a></td>
+    </tr>
+    </tbody>
+</table>
+
+<br>
+
+<div class="footer-links">
+    <a th:href="@{/}">&lt; Home</a>
+    <a th:href="@{/reception/achat}">Nouvelle réception ></a>
+</div>
+</body>
+<br>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des inventaires</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-color: #f4f6f9;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 50px;
+            color:#007BFF;
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        form {
+            margin-bottom: 30px;
+            display: inline-block;
+            text-align: left;
+            background-color: #fff;
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        form label {
+            display: inline-block;
+            width: 120px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        form input {
+            padding: 7px;
+            margin: 8px 0;
+            width: 200px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        form button {
+            margin-top: 10px;
+            margin-left: 125px;
+            padding: 8px 16px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        form button:hover {
+            background-color: #0056b3;
+        }
+
+        table {
+            width: 95%;
+            margin: 0 auto 30px auto;
+            background-color: white;
+            border-collapse: collapse;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+        }
+
+        th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+            color: #333;
+        }
+
+        td {
+            color: #555;
+        }
+
+        td a {
+            color: #28a745;
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        td a:hover {
+            text-decoration: underline;
+            color: #218838;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+            margin-right: 5%;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            color: #007BFF;
+            font-weight: bold;
+            text-decoration: none;
+            transition: text-decoration 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+
+    </style>
+
+</head>
+
+<body>
+<main>
+    <h2>Liste des inventaires</h2>
+
+    <form th:action="@{/inventaire/recherche}" method="get">
+        <label for="date1">Date inventaire De :</label>
+        <input type="date" name="date1" id="date1"/><br/>
+
+        <label for="date2">À :</label>
+        <input type="date" name="date2" id="date2"/><br/>
+
+        <label for="entrepot">Entrepôt :</label>
+        <input type="text" name="entrepot" id="entrepot"/><br/>
+
+        <button type="submit">Chercher</button>
+    </form>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Date inventaire</th>
+            <th>Entrepôt</th>
+            <th>Effectué par</th>
+            <th>Validé par</th>
+            <th>Écarts</th>
+            <th>Téléchargement</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="inv : ${inventaires}">
+            <td th:text="${inv.dateInventaire}">01/04/2023</td>
+            <td th:text="${inv.entrepot}">MAG1</td>
+            <td th:text="${inv.effectuePar}">Mohamed</td>
+            <td th:text="${inv.validePar}">Ahmed</td>
+            <td><a th:href="@{/inventaire/affichee/ecarts(date=${inv.dateInventaire}, entrepot=${inv.entrepot})}">
+                Afficher
+            </a>
+            </td>
+            <td><a th:href="@{'/inventaire/telecharger/' + ${inv.id}}">Télécharger</a></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- ➕ Actions -->
+    <div class="new-inventory">
+        <a href="/inventaire/nouveau"> Nouveau inventaire</a>
+    </div>
+
+    <div class="top-actions">
+        <a href="/inventaire/ecarts"> Valider inventaire</a>
+    </div>
+
+    <div class="footer-links">
+        <a th:href="@{/}">&lt; Home</a>
+    </div>
+</main>
+</body>
+</html>

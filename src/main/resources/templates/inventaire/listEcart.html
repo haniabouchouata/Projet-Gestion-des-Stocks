@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Écarts Inventaire</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-color: #f4f6f9;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 50px;
+            color: #007BFF;
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        table {
+            width: 95%;
+            margin: 0 auto 30px auto;
+            background-color: white;
+            border-collapse: collapse;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+        }
+
+        th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+            color: #333;
+        }
+
+        td {
+            color: #555;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+            margin-right: 5%;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            color: #007BFF;
+            font-weight: bold;
+            text-decoration: none;
+            transition: text-decoration 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Écarts Inventaire</h2>
+
+<table>
+    <thead>
+    <tr>
+        <th>Produit</th>
+        <th>Quantité avant</th>
+        <th>Quantité après</th>
+        <th>Différence</th>
+        <th>Justification</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="ecart : ${ecarts}">
+        <td th:text="${ecart.produit.nom}">Produit</td>
+        <td th:text="${ecart.quantiteAvant}">100</td>
+        <td th:text="${ecart.quantiteApres}">98</td>
+        <td th:text="${ecart.difference}">2</td>
+        <td th:text="${ecart.justification}">juste commercial non tracé</td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="footer-links">
+    <a th:href="@{/}">&lt; Home</a>
+</div>
+
+</body>
+</html>

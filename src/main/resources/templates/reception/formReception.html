@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Nouvelle Réception</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f6f8;
+      color: #333;
+      text-align: center;
+    }
+
+    h2 {
+      margin-top: 40px;
+      color: #2c3e50;
+      font-size: 1.8em;
+    }
+
+    form {
+      background-color: #fff;
+      padding: 30px 40px;
+      margin: 15px auto;
+      width: 400px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      text-align: left;
+    }
+
+    form label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    form input {
+      width: 100%;
+      padding: 8px 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    form button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 15px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    form button:hover {
+      background-color: #0056b3;
+    }
+
+    a.back-link {
+      display: inline-block;
+      margin-bottom: 40px;
+      font-size: 14px;
+      color: #007BFF;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    a.back-link:hover {
+      text-decoration: underline;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: flex-end;
+      margin-right: 5%;
+      margin-top: 30px;
+      gap: 20px;
+    }
+
+    .footer-links a {
+      color: #007BFF;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+<h2>Réceptions > Nouvelle réception</h2>
+
+<form th:action="@{/reception/enregistrer}" method="post">
+  <div>
+    <label>Date de réception :</label>
+    <input type="date" name="dateReception" th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" required>
+  </div>
+  <div>
+    <label>Produit :</label>
+    <input type="text" name="produit" th:value="${reception.produit}">
+  </div>
+
+  <div>
+    <label>Unité :</label>
+    <select name="unite" required>
+      <option th:selected="${reception.unite == 'Kg'}" value="Kg">Kg</option>
+      <option th:selected="${reception.unite == 'L'}" value="L">L</option>
+    </select>
+  </div>
+
+  <div>
+    <label>Quantité :</label>
+    <input type="number" name="quantite" th:value="${reception.quantite}" min="1" required>
+  </div>
+
+  <div>
+    <label>Source :</label>
+    <input type="text" name="source" th:value="${reception.source}" required>
+  </div>
+
+  <div>
+    <label>Entrepôt :</label>
+    <select name="entrepot">
+      <option th:each="e : ${entrepots}"
+              th:value="${e.nom}"
+              th:text="${e.nom}"
+              th:selected="${reception.entrepot != null and e.nom == reception.entrepot}">
+      </option>
+    </select>
+
+  </div>
+
+  <button type="submit">OK</button>
+</form>
+
+<br>
+<a th:href="@{/reception}">&lt; Liste des réceptions</a>
+</body>
+</html>
